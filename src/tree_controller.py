@@ -7,15 +7,6 @@ class TreeController:
         self.best_node = None
 
 
-    # def get_similar_nodes(self, known_ancs_file_path, unknown_ancs_file_path, same_tree=False):
-    #
-    #     tree_known_ancs = TreeNodeObject(known_ancs_file_path)
-    #     tree_unknown_ancs = TreeNodeObject(unknown_ancs_file_path)
-    #
-    #     return self._get_similar_nodes(tree_known_ancs, tree_unknown_ancs, same_tree)
-    #
-
-
     def _get_intersection(self, tree_known_ancs, tree_unknown_ancs):
         known_extent_dict = tree_known_ancs.get_extent_dict()
         unknown_extent_dict = tree_unknown_ancs.get_extent_dict()
@@ -74,7 +65,7 @@ class TreeController:
         tree_known_ancs.get_root().build_intersection_label_mapping(intersection)
         tree_unknown_ancs.get_root().build_intersection_label_mapping(intersection)
 
-        nodes = tree_unknown_ancs.get_ancestor_dict()
+        nodes = tree_known_ancs.get_ancestor_dict()
         tree_unknown_ancs_root = tree_unknown_ancs.get_root()
 
         similar_node_dict = dict()
@@ -82,6 +73,7 @@ class TreeController:
         for label, ancestor_node in nodes.items():
             self._score_nodes(ancestor_node.get_intersect_ids(), tree_unknown_ancs_root)
             similar_node_dict[ancestor_node.get_label()] = self.best_node
+            print(self.best_node.get_label(), label, self.best_node.get_score())
             # reset for next node
             self.best_node = None
 
@@ -134,5 +126,7 @@ class TreeController:
             if node.get_other_extent_count() < self.best_node.get_other_extent_count():
                 self.best_node = node
 
+            # ToDo: add in the secondary condition of distance to root comparison when the other
+            # exnt count is the same
         return node.get_score()
 

@@ -22,10 +22,12 @@ class TestStringMethods(unittest.TestCase):
         tc = TreeController()
         node_macthing = tc.get_similar_nodes_between_trees(t1, t2, True)
 
+        for label, node in node_macthing.items():
+            print(label, node.get_label())
         self.assertEqual(node_macthing["N0"].get_label(), "N0")
-        self.assertEqual(node_macthing["N35_0.126"].get_label(), "N26_0.907")
-        self.assertEqual(node_macthing["N16_0.993"].get_label(), "N16_0.993")
-        self.assertEqual(node_macthing["N3"].get_label(), "N1_0.749")
+        self.assertEqual(node_macthing["N8_0.974"].get_label(), "N11_0.969")
+        self.assertEqual(node_macthing["N5_0.985"].get_label(), "N9_0.991")
+        self.assertEqual(node_macthing["N3_0.994"].get_label(), "N7_0.969")
 
 
 if __name__ == '__main__':
