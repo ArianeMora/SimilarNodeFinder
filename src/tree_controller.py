@@ -71,15 +71,19 @@ class TreeController:
         similar_node_dict = dict()
 
         for label, ancestor_node in nodes.items():
-            self._score_nodes(ancestor_node.get_intersect_ids(), tree_unknown_ancs_root)
+            self._score_nodes(ancestor_node.get_intersect_ids(), tree_unknown_ancs_root, ancestor_node)
             similar_node_dict[ancestor_node.get_label()] = self.best_node
-            print(self.best_node.get_label(), label, self.best_node.get_score())
+
             # reset for next node
             self.best_node = None
 
             tree_unknown_ancs.clear_scores()
             tree_known_ancs.clear_scores()
 
+        # We want to go through and check if any of the nodes had a score of 0. This would mean 1 of 2 things:
+        # 1. equal number of correctly and incorrectly placed nodes
+        # 2. there were no extents in both trees under the node of interest
+        # For situation 2 we can place it base on the correctly placed nodes
         return similar_node_dict
 
 
@@ -92,7 +96,7 @@ class TreeController:
     
     The extend_id_map includes the extents under a specific node
     """
-    def _score_nodes(self, extent_id_list, node):
+    def _score_nodes(self, extent_id_list, node, ancs_node_compared_with):
         if self.breakout:
             return 0.0
 
@@ -110,7 +114,7 @@ class TreeController:
                 return value
 
         for child_tree_node in node.get_children():
-            score += self._score_nodes(extent_id_list, child_tree_node)
+            score += self._score_nodes(extent_id_list, child_tree_node, ancs_node_compared_with)
             if self.breakout:
                 return 0.0
 
@@ -126,7 +130,12 @@ class TreeController:
             if node.get_other_extent_count() < self.best_node.get_other_extent_count():
                 self.best_node = node
 
-            # ToDo: add in the secondary condition of distance to root comparison when the other
-            # exnt count is the same
+            if node.get_other_extent_count() == self.best_node.get_other_extent_count():
+                this_dist_diff = abs(node.get_dist_to_root() - ancs_node_compared_with.get_dist_to_root())
+                best_node_dist_diff = abs(self.best_node.get_dist_to_root() - ancs_node_compared_with.get_dist_to_root())
+                print(this_dist_diff, best_node_dist_diff)
+                if this_dist_diff < best_node_dist_diff:
+                    self.best_node = node
+
         return node.get_score()
 

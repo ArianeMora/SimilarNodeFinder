@@ -27,7 +27,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(node_macthing["N0"].get_label(), "N0")
         self.assertEqual(node_macthing["N8_0.974"].get_label(), "N11_0.969")
         self.assertEqual(node_macthing["N5_0.985"].get_label(), "N9_0.991")
-        self.assertEqual(node_macthing["N3_0.994"].get_label(), "N7_0.969")
+        self.assertEqual(node_macthing["N3_0.994"].get_label(), "N6_0.033")
 
 
 if __name__ == '__main__':

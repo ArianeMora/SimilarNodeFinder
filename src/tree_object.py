@@ -26,6 +26,13 @@ class TreeObject:
 
     def _load(self):
         self._load_newick(self.file_path)
+        # set the distance to the root for all the nodes
+        for node in self.node_dict:
+            self.node_dict[node].set_dist_to_root()
+        for node in self.ancestor_node_dict:
+            self.ancestor_node_dict[node].set_dist_to_root()
+        for node in self.extent_node_dict:
+            self.extent_node_dict[node].set_dist_to_root()
 
     def get_root(self):
         if not self.root:

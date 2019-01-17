@@ -28,6 +28,22 @@ class TreeNodeObject:
         self.score = 0.0
         self.in_intersection = False
         self.other_extent_count = 0
+        self.dist_to_root = None
+
+    def set_dist_to_root(self):
+        if self.dist_to_root:
+            return self.dist_to_root
+        if self.parent:
+            if not self.parent.get_dist_to_root():
+                self.parent.set_dist_to_root()
+            self.dist_to_root = self.dist + self.parent.get_dist_to_root()
+            return self.dist_to_root
+        # Parent or all (i.e. root)
+        self.dist_to_root = self.dist
+        return self.dist
+
+    def get_dist_to_root(self):
+        return self.dist_to_root
 
     def set_id(self, id):
         self.id = id
