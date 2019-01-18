@@ -71,8 +71,13 @@ class TreeController:
         similar_node_dict = dict()
 
         for label, ancestor_node in nodes.items():
-            self._score_nodes(ancestor_node.get_intersect_ids(), tree_unknown_ancs_root, ancestor_node)
-            similar_node_dict[ancestor_node.get_label()] = self.best_node
+            ancestor_intersection = ancestor_node.get_intersect_ids()
+
+            if len(ancestor_intersection) < 1:
+                similar_node_dict[ancestor_node.get_label()] = None
+            else:
+                self._score_nodes(ancestor_intersection, tree_unknown_ancs_root, ancestor_node)
+                similar_node_dict[ancestor_node.get_label()] = self.best_node
 
             # reset for next node
             self.best_node = None
@@ -84,6 +89,7 @@ class TreeController:
         # 1. equal number of correctly and incorrectly placed nodes
         # 2. there were no extents in both trees under the node of interest
         # For situation 2 we can place it base on the correctly placed nodes
+
         return similar_node_dict
 
 
