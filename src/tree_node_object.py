@@ -72,7 +72,7 @@ class TreeNodeObject:
                 self.label = splitted[1]
             else:
                 self.label = splitted[0]
-        elif len(raw_label.split('_')) > 1:
+        elif not extent and len(raw_label.split('_')) > 1:
             self.label = raw_label.split('_')[0]
         elif extent or raw_label == 'N0' or not is_number:
             self.label = raw_label
