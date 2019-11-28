@@ -139,7 +139,7 @@ class TreeController:
             if node.get_other_extent_count() == self.best_node.get_other_extent_count():
                 this_dist_diff = abs(node.get_dist_to_root() - ancs_node_compared_with.get_dist_to_root())
                 best_node_dist_diff = abs(self.best_node.get_dist_to_root() - ancs_node_compared_with.get_dist_to_root())
-                print(this_dist_diff, best_node_dist_diff)
+                #print(this_dist_diff, best_node_dist_diff)
                 if this_dist_diff < best_node_dist_diff:
                     self.best_node = node
 

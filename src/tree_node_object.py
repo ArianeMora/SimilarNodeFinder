@@ -78,6 +78,9 @@ class TreeNodeObject:
             self.label = raw_label
         else:
             self.label = 'N' + str(self.id) + '_' + raw_label
+        # Double check label doesn't equal nothing
+        if self.label == '':
+            self.label = 'N' + str(self.id)
 
     """
      * Make a mapping of the intersection and the labels contained in this node.
