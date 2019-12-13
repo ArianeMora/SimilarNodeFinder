@@ -90,6 +90,10 @@ class TreeObject:
 
         else:
             label = newick_str[: split_idx].strip()
+            if label[:2] == 'sp' or label[:2] == 'tr':
+                label = label.split('|')[1]
+            else:
+                label = label.split('|')[0]
             dist = self._get_dist(newick_str, split_idx)
             node = TreeNodeObject(label, parent, dist, next_id, True)
             next_id += 1
