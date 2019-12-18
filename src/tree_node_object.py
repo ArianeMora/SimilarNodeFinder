@@ -77,10 +77,7 @@ class TreeNodeObject:
         elif extent or raw_label == 'N0' or not is_number:
             self.label = raw_label
         else:
-            self.label = 'N' + str(self.id) + '_' + raw_label
-        # Double check label doesn't equal nothing
-        if self.label == '':
-            self.label = 'N' + str(self.id)
+            print('--------- WARNING NO LABEL! ---------------')
 
     """
      * Make a mapping of the intersection and the labels contained in this node.
