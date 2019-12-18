@@ -119,7 +119,8 @@ class TreeObject:
             if len(tail) > 1:
                 label = tail[: split_idx]
             else:
-                label = "N" + str(count)
+                print("------------------ ERROR NO INTERNAL NODE LABELS!!! ----------------------------")
+                return None
             dist = self._get_dist(tail, split_idx)
             node = TreeNodeObject(label, parent, dist, count, False)
             if not self.root:
