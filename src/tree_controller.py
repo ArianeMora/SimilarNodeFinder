@@ -75,6 +75,7 @@ class TreeController:
 
             if len(ancestor_intersection) < 1:
                 similar_node_dict[ancestor_node.get_label()] = None
+
             else:
                 self._score_nodes(ancestor_intersection, tree_unknown_ancs_root, ancestor_node)
                 similar_node_dict[ancestor_node.get_label()] = self.best_node
@@ -129,8 +130,13 @@ class TreeController:
         if not self.best_node:
             self.best_node = node
         elif node.get_score() < self.best_node.get_score():
+            if ancs_node_compared_with.label == 'N0':
+                i = 0
+
             self.best_node = node
         elif node.get_score() == self.best_node.get_score():
+            if ancs_node_compared_with.label == 'N0':
+                i = 0
             # Here we use the number of other extents included to be the tiebreaker
             # we choose the one which has the fewest extra extents (i.e. should give the most similar reconstruction
             if node.get_other_extent_count() < self.best_node.get_other_extent_count():

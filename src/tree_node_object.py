@@ -14,6 +14,7 @@ class TreeNodeObject:
         self.parent = parent
         self.id = id
         self.extent = extent
+        self.leaves_count = 0
         self._format_label(label, extent)
         if not dist:
             dist = 0.0
@@ -57,6 +58,24 @@ class TreeNodeObject:
     def add_child(self, child):
         self.children.append(child)
 
+    def set_leaves_count(self):
+        if self.label == 'N0' or self.label == 'N1':
+            i = 0
+        if self.leaves_count:
+            return self.leaves_count
+
+        if self.extent:
+            self.leaves_count = 1
+            return self.leaves_count
+
+        for child in self.children:
+            self.leaves_count += child.set_leaves_count()
+        if self.label == 'N0' or self.label == 'N1':
+            i = 0
+        return self.leaves_count
+
+    def get_leaves_count(self):
+        return self.leaves_count
 
     def _format_label(self, raw_label, extent):
         is_number = False
@@ -104,7 +123,9 @@ class TreeNodeObject:
             self.intersect_id_list += tree_node_object.get_intersect_ids()
 
         # Potentially keep track of the count
-        self.other_extent_count = len(self.leaves) - len(self.intersect_id_list)
+        if self.label == 'N0' or self.label == 'N1':
+            i = 0
+        self.other_extent_count = self.leaves_count - len(self.intersect_id_list)
 
         return False
 

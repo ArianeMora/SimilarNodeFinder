@@ -31,8 +31,10 @@ class TreeObject:
             self.node_dict[node].set_dist_to_root()
         for node in self.ancestor_node_dict:
             self.ancestor_node_dict[node].set_dist_to_root()
+            self.ancestor_node_dict[node].set_leaves_count()
         for node in self.extent_node_dict:
             self.extent_node_dict[node].set_dist_to_root()
+            self.extent_node_dict[node].set_leaves_count()
 
     def get_root(self):
         if not self.root:
