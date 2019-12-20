@@ -148,6 +148,7 @@ class TreeNodeObject:
         self.score += score
 
     def get_other_extent_count(self):
+        self.other_extent_count = self.leaves_count - len(self.intersect_id_list)
         return self.other_extent_count
 
     def get_intersect_ids(self):
